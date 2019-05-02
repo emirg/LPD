@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.rmi.*;
 
 /**
  *
  * @author emiliano
  */
+
 public class Servidor {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Uso: Servidor Puerto");
+        if (args.length != 2) {
+            System.err.println("Uso: Ingresar IP y Puerto");
             return;
         }
         /*if (System.getSecurityManager() == null) {
@@ -26,7 +21,7 @@ public class Servidor {
         }*/
         try {
             Servicios serv = new ServidorImplementacion();
-            Naming.rebind("rmi://localhost:" + args[0] + "/ServidorImplementacion",serv);
+            Naming.rebind("rmi://" + args[0] + ":" + args[1] + "/ServidorImplementacion",serv);
 
         } catch (Exception e) {
             System.err.println("Excepcion en Servidor:");

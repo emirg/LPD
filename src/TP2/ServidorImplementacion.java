@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.*;
-import java.util.concurrent.Callable;
-//import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
  * @author emiliano
  */
+
 public class ServidorImplementacion extends UnicastRemoteObject implements Servicios {
 
     private static final long serialVersionUID = 1L;
@@ -42,71 +31,49 @@ public class ServidorImplementacion extends UnicastRemoteObject implements Servi
 
     @Override
     public String consultar(String consulta) throws RemoteException {
-        String resultadoCadena = "Vacio";
+        String respuesta = "Recibido :)";
+
+        System.out.println("Cliente> petición [" + consulta + "]");
+
         try {
             if (cache.containsKey(consulta)) { //Si la consulta esta en cache...
-                resultadoCadena = (String) cache.get(consulta);
+                respuesta = (String) cache.get(consulta);
                 System.out.println("REQUEST ESTABA EN CACHE");
             } else {
-                ExecutorService servicio = Executors.newFixedThreadPool(1);
-                Future<String> resultado = servicio.submit(new ManejadorCentral(consulta));
-                System.out.println(resultado.get());
-                resultadoCadena = resultado.get();
+                String[] datos = process(consulta);
+                String signo = datos[0];
+                String fecha = datos[1];
+
+                fecha = pronostico.consultarPronostico(fecha);
+                signo = horoscopo.consultarHoroscopo(signo);
+
+                respuesta = signo + " y " + fecha;
+                System.out.println("Central> Resultado de petición");
+                System.out.println("Central> \"" + respuesta + "\"");
                 if (cache.size() > 10) {
                     String vieja = (String) cache.keys().nextElement();
                     cache.remove(vieja);
                     //System.out.println("SAQUE UNA CONSULTA CACHEADA: "+ vieja);
                 }
-                cache.put(consulta, resultadoCadena);
+                cache.put(consulta, respuesta);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            System.err.println("ERROR");
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return resultadoCadena;
+        return respuesta;
 
     }
 
-    class ManejadorCentral implements Callable<String> {
 
-        private final String consulta;
-        //private final ServiciosPronostico pronostico;
-
-        public ManejadorCentral(String consulta) {
-            this.consulta = consulta;
-            
+    public  String[] process(String request) { //Metodo para separar los datos de la consulta
+        String[] datos = new String[2];
+        if (request != null) {
+            datos = request.split(" ");
+            System.out.println(datos[0]);
+            System.out.println(datos[1]);
         }
-
-        public  String[] process(String request) { //Metodo para separar los datos de la consulta
-            String[] datos = new String[2];
-            if (request != null) {
-                datos = request.split(" ");
-                System.out.println(datos[0]);
-                System.out.println(datos[1]);
-            }
-            return datos;
-        }
-
-        @Override
-        public String call() throws Exception {
-            String respuesta = "Recibido :)";
-
-            System.out.println("Cliente> petición [" + consulta + "]");
-
-            String[] datos = process(consulta);
-            String signo = datos[0];
-            String fecha = datos[1];
-
-            fecha = pronostico.consultarPronostico(fecha);
-            signo = horoscopo.consultarHoroscopo(signo);
-
-            respuesta = signo + " y " + fecha;
-            System.out.println("Central> Resultado de petición");
-            System.out.println("Central> \"" + respuesta + "\"");
-
-            return respuesta;
-        }
+        return datos;
     }
 
 }
