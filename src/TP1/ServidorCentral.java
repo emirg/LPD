@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Final;
+package TP1;
 
 /**
  *
@@ -56,7 +56,7 @@ public class ServidorCentral {
                 System.out.println("Central> En espera de cliente...");
                 clientSocket = serverSocket.accept();
 
-                // Una vez aceptada la conexion con el cliente:
+                //  Una vez aceptada la conexion con el cliente:
                 //  Se crea un nuevo socket 
                 //  Se crea un hilo que se encargue de las peticiones del cliente sobre el socket creado
                 new ManejadorCentral(clientSocket, proSocket, horSocket, cache).start(); 

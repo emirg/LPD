@@ -1,4 +1,4 @@
-package Final;
+package TP1;
 
 
 public class ServicioPronostico {
