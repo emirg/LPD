@@ -10,7 +10,7 @@ import java.rmi.*;
 public class ServidorHoroscopo extends UnicastRemoteObject implements ServiciosHoroscopo {
 
     private static final long serialVersionUID = 1L;
-    private static final String[] predicciones = {	
+    private static final String[] predicciones = { // BD con posibles predicciones 	
     	"Hoy es un gran dia",
     	"Hoy vas a estar feliz",
     	"Hoy comes asado",
@@ -32,10 +32,13 @@ public class ServidorHoroscopo extends UnicastRemoteObject implements ServiciosH
     }
 
     /**
-     * @param args the command line arguments
-     */
+    * @param args argumentos de la linea de comando 
+    * @param args[0] una direccion IP (localhost es valido)
+    * @param args[1] un numero de puerto (debe tener asociado un servicio RMI Registry)
+    */
+
     public static void main(String[] args) {
-        if (args.length != 2) {
+        if (args.length != 2) { // Si no se ingresan la cantidad de parametros correctos
             System.err.println("Uso: Ingresar IP y Puerto");
             return;
         }
@@ -44,8 +47,8 @@ public class ServidorHoroscopo extends UnicastRemoteObject implements ServiciosH
             System.setProperty("java.rmi.server.hostname", "10.0.0.199");
         }*/
         try {
-            ServiciosHoroscopo serv = new ServidorHoroscopo();
-            Naming.rebind("rmi://" + args[0] + ":" + args[1] + "/ServidorHoroscopo",serv);
+            ServiciosHoroscopo serv = new ServidorHoroscopo(); // Se instancian los servicios
+            Naming.rebind("rmi://" + args[0] + ":" + args[1] + "/ServidorHoroscopo",serv); // Se asocia una URL a la IP y puerto de los parametros
 
         } catch (Exception e) {
             System.err.println("Excepcion en Servidor:");
@@ -54,43 +57,53 @@ public class ServidorHoroscopo extends UnicastRemoteObject implements ServiciosH
         }
     }
 
+    /**
+	* @param consulta es un signo del horoscopo
+	* @return         una predicción acorde al signo enviado por parametro
+    */
+
     @Override
     public String consultarHoroscopo(String consulta) throws RemoteException {
-		String respuesta = "Recibido :)";
+		String respuesta = "Recibido :)"; 
 
 		System.out.println("Cliente> petición [" + consulta + "]");
 
-		respuesta = process(consulta);
+		respuesta = process(consulta); // Se procesa la consulta buscando la respuesta en la BD
 
 
 		System.out.println("Horoscopo> Resultado de petición");
 		System.out.println("Horoscopo> \"" + respuesta + "\"");
 
-		return respuesta;
+		return respuesta; // Devuelve la predicción
     }
 
-      public  String process(String consulta) { //Metodo para separar los datos de la consulta
+    /**
+	* @param request es un signo del horoscopo
+	* @return         una predicción acorde al signo enviado por parametro
+    */
+    
+    public String process(String request) { //Metodo para separar los datos de la consulta
 	        
-			String resultado="";
-			
-			switch(consulta.toLowerCase()) {
-			
-				case "libra": resultado=predicciones[0] ;break;
-				case "aries": resultado=predicciones[1];break;
-				case "tauro": resultado=predicciones[2];break;
-				case "geminis": resultado=predicciones[3];break;
-				case "cancer": resultado=predicciones[4];break;
-				case "leo": resultado=predicciones[5];break;
-				case "virgo": resultado=predicciones[6];break;
-				case "escorpio": resultado=predicciones[7];break;
-				case "sagitario": resultado=predicciones[8];break;
-				case "capricornio": resultado=predicciones[9];break;
-				case "acuario": resultado=predicciones[10];break;
-				case "piscis": resultado=predicciones[11];break;
-				default: resultado="El signo ingresado es incorrecto!" ;break;	
-			
-			}
-			return resultado;
-	    }
+		String resultado="";
+		
+		switch(request.toLowerCase()) {
+		
+			case "libra": resultado=predicciones[0] ;break;
+			case "aries": resultado=predicciones[1];break;
+			case "tauro": resultado=predicciones[2];break;
+			case "geminis": resultado=predicciones[3];break;
+			case "cancer": resultado=predicciones[4];break;
+			case "leo": resultado=predicciones[5];break;
+			case "virgo": resultado=predicciones[6];break;
+			case "escorpio": resultado=predicciones[7];break;
+			case "sagitario": resultado=predicciones[8];break;
+			case "capricornio": resultado=predicciones[9];break;
+			case "acuario": resultado=predicciones[10];break;
+			case "piscis": resultado=predicciones[11];break;
+			default: resultado="El signo ingresado es incorrecto!" ;break;	
+		
+		}
+		return resultado;
+	}
 }
 
