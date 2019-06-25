@@ -4,11 +4,11 @@ Para correr el ejemplo se necesita:
 
 2) En el directorio node_modules están los módulos requeridos. Sino funciona el server:
    Instalar npm (sudo apt-get install npm)
-   con npm instalar node-cron (npm install --save node-cron)
-   con npm instalar websocket (npm install websocket)
+   con npm instalar express (npm install -s express)
+   con npm instalar socket.io (npm install -s socket.io)
 
 2) Algún servidor http. 
-   Simple y rápido SimpleHTTPServer de python   
+   Simple y rápido SimpleHTTPServer de python
 
 3) Descomprimir en un directorio a elección el ejemplo
 
