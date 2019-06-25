@@ -32,6 +32,14 @@ window.addEventListener("load", function(event) {
       .val("")
       .focus();
     $("#chat").append($('<li class="messageSended">').text(message)); // Agrega el mensaje a la lista del chat como un mensaje enviado por el cliente, y no recibido del servidor
+    $("#contenedor_chat").stop().animate({ scrollTop: $("#contenedor_chat")[0].scrollHeight}, 1000);
+
     return false;
   }
+
+
+
 });
+
+
+

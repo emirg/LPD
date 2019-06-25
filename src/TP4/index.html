@@ -11,23 +11,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
   </head>
 
   <body>
     <div id="app">
       <!-- Lista de mensajes enviados y recibidos -->
-      <ul id="chat"></ul>
+      <div class="card pre-scrollable sticky-top" id="contenedor_chat" style="margin-top: 13%;">
+        <ul class="card-body" id="chat"></ul>
+      </div>
 
       <!-- Entrada de texto para escribir mensaje y boton para enviar mensaje -->
       <div class="container">
         <div class="row">
           <input id="messageToSend" type="text" class="col-10 " />
-          <input
-            id="sendButton"
-            type="button"
-            class="btn btn-primary col-2"
-            value="Send"
-          />
+          <button id="sendButton" type="button" class="btn btn-primary col-2" >
+            <i class="far fa-paper-plane"></i>
+            Enviar
+          </button>
+            
+         
         </div>
       </div>
     </div>
