@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Chat App</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-  </head>
+<head>
+  <title>Chat App</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-  <body>
-    <div id="app" class="shadow bg-light">
-      <!-- Lista de mensajes enviados y recibidos -->
-      <div class="card pre-scrollable sticky-top" id="contenedor_chat" style="margin-top: 13%;">
-        <ul class="card-body" id="chat"></ul>
+</head>
+
+<body>
+  <div id="app" class="shadow bg-light">
+    <!-- Lista de mensajes enviados y recibidos -->
+    <div class="card pre-scrollable sticky-top" id="contenedor_chat" style="margin-top: 13%;">
+      <ul class="card-body" id="chat"></ul>
+    </div>
+
+    <!-- Entrada de texto para escribir mensaje y boton para enviar mensaje -->
+    <div class="container ">
+
+      <div class="row">
+        <input id="messageToSend" type="text" class="col-10 " />
+        <button id="sendButton" type="button" class="btn btn-success col-2">
+          <i class="far fa-paper-plane"></i>
+          Enviar
+        </button>
       </div>
-
-      <!-- Entrada de texto para escribir mensaje y boton para enviar mensaje -->
-      <div class="container ">
-        
-        <div class="row">
-          <input id="messageToSend" type="text" class="col-10 " />
-          <button id="sendButton" type="button" class="btn btn-success col-2" >
-            <i class="far fa-paper-plane"></i>
-            Enviar
-          </button>
-            
-         
-        </div>
+      <div class="row">
+        <h5 id="nickActual" class="col-2 ">Nick:</h5>
+        <input id="nickname" type="text" class="col-10" />
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
