@@ -17,6 +17,7 @@ app.get("/", function (req, res) {
 
 // Cuando hay una conexion...
 io.on("connection", function (socket) {
+
   socket.on("name", function (name) {
     nombres.set(name, socket.id);
     clientes.set(socket.id, name);
@@ -26,7 +27,7 @@ io.on("connection", function (socket) {
   // Al recibir un mensaje, hacer...
   socket.on("messageTo", function (msg) {
     // Enviar mensaje a todos los nombres menos al emisor
-    //console.log(msg);
+    console.log(msg);
     var destinatario = nombres.get(msg.to);
     var emisor = clientes.get(socket.id);
     io.to(destinatario).emit('message', { "message": msg.message, "from": emisor });
@@ -34,7 +35,14 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", function () {
 
+    var userName=clientes.get(socket.id);
+    console.log(userName+' Cerro la sesion');
+
+    nombres.delete(clientes.get(socket.id))
+    clientes.delete(socket.id);
   });
+
+
 });
 
 // Inicia el servidor http en el puerto designado

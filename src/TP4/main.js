@@ -4,8 +4,29 @@ window.addEventListener("load", function (event) {
 
   // Al recibir un mensaje, crea un elemento en la lista chat mostrando dicho mensaje
   socket.on("message", function (msg) {
-    $("#chat").append($('<li class="sender">').text(msg.from));
-    $("#chat").append($('<li class="messageReceived">').text(msg.message));
+    
+    var liMessageRecibed=document.createElement('li');
+    liMessageRecibed.className="messageReceived";
+
+    var divFrom=document.createElement('div');
+    divFrom.className="formatFrom";
+
+    var divMessage=document.createElement('div');
+    divMessage.className="formatMessage";
+
+    var textMessage=document.createTextNode(msg.message);
+    var textFrom=document.createTextNode(" "+msg.from+":");
+
+    divFrom.innerHTML=('<i class="fas fa-user-alt"></i>')
+    divFrom.appendChild(textFrom);
+    divMessage.appendChild(textMessage)
+
+    liMessageRecibed.append(divFrom);
+    liMessageRecibed.append(divMessage);
+
+    $("#chat").append(liMessageRecibed);
+
+   
   });
 
   // Cuando se presiona el boton de 'Send', se envia el mensaje
@@ -20,7 +41,7 @@ window.addEventListener("load", function (event) {
     }
   });
 
-  // Cuando se apreta 'enter', se envia asigna el nuevo nick
+  // Cuando se apreta 'enter', se asigna el nuevo nick
   $("#nickname").keypress(function (e) {
     if (e.which == 13) {
       var to = $("#nickActual").text();
@@ -54,7 +75,10 @@ window.addEventListener("load", function (event) {
     $("#messageToSend")
       .val("")
       .focus();
-    $("#chat").append($('<li class="messageSended">').text(message)); // Agrega el mensaje a la lista del chat como un mensaje enviado por el cliente, y no recibido del servidor
+    $("#chat").append($('<li class="messageSended">').text(message)); 
+    // Agrega el mensaje a la lista del chat como un mensaje enviado por el cliente, y no recibido del servidor
+   
+   
     $("#contenedor_chat").stop().animate({ scrollTop: $("#contenedor_chat")[0].scrollHeight }, 1000);
 
     return false;
